@@ -5,9 +5,12 @@
 
 import React, { Component } from 'react';
 import '@instructure/ui-themes/lib/canvas';
+import shortid from 'shortid';
 import './ComponentStuffer.css';
 import * as Components from '@instructure/ui-core/lib/components';
-import shortid from 'shortid';
+import Header from './components/Header/Header';
+import Test from './components/Test/Test';
+import Clown from './components/Clown/Clown';
 
 // templated imports
 {{#codeBlocks}}
@@ -72,6 +75,21 @@ const ignoreEls = [
   '{{.}}',
   {{/ignoreEls}}
 ];
+
+const codeOverrides = {
+  Alert: <Alert
+    variant="success"
+    closeButtonLabel="Close"
+    margin="small"
+    transition="none"
+  >
+    Sample success alert text. I will close w/o a transition out if you close me
+  </Alert>
+};
+
+function fetchCode (key) {
+  return codeOverrides[key] || code[key];
+}
 
 const availableEls = [
   'AccessibleContent',
@@ -149,7 +167,7 @@ function difference(a1, a2) {
 }
 
 const elsMinusIgnored = difference(availableEls, ignoreEls);
-console.log(elsMinusIgnored);
+// console.log(elsMinusIgnored);
 
 class ComponentStuffer extends Component {
   constructor (props) {
@@ -176,77 +194,64 @@ class ComponentStuffer extends Component {
 
   render() {
     const els = [];
-    console.log(Object.keys(code));
-    const firstElPropsList = Object.assign({}, code[this.state.component].props);
-    console.log(firstElPropsList);
+    // console.log(Object.keys(code));
+    const firstElPropsList = Object.assign({}, fetchCode(this.state.component).props, {
+      size: this.state.size,
+      variant: this.state.variant
+    });
+    console.log('this.state.component', this.state.component);
+    console.log('firstElPropsList', firstElPropsList);
     for (let secondEl in code) {
       if (code.hasOwnProperty(secondEl)) {
         firstElPropsList.key = shortid.generate();
-        firstElPropsList.size = this.state.size;
-        firstElPropsList.variant = this.state.variant;
-        console.log('this.state.component', this.state.component);
-        console.log('firstElPropsList', firstElPropsList);
 
-        const secondElPropsList = Object.assign({}, code[secondEl].props);
+        const secondElPropsList = Object.assign({}, fetchCode(secondEl).props);
         secondElPropsList.key = shortid.generate();
-        secondElPropsList.size = this.state.size;
-        secondElPropsList.variant = this.state.variant;
 
-        console.log('secondEl', secondEl);
-        console.log('secondElPropsList', secondElPropsList);
+        // console.log('secondEl', secondEl);
+        // console.log('secondElPropsList', secondElPropsList);
 
-        const el = React.createElement(Components[this.state.component], firstElPropsList,
+        const element = React.createElement(Components[this.state.component], firstElPropsList,
           React.createElement(Components[secondEl], secondElPropsList)
         );
 
-        els.push(el)
+        els.push({
+          element,
+          parentName: this.state.component,
+          childName: secondEl
+        });
       }
     }
 
     return (
-      <div>
-        <Grid>
-          <GridRow>
-            <GridCol width="6">
-              <Heading>
-                Freak Show
-              </Heading>
-            </GridCol>
-            <GridCol>
-              <Select
-                label="Components"
-                value={this.state.component}
-                onChange={this.handleComponentOnChange}
-              >
-                {elsMinusIgnored.map(el => <option>{el}</option>)}
-              </Select>
-            </GridCol>
-            <GridCol>
-              <Select
-                label="Size"
-                value={this.state.size}
-                onChange={this.handleSizeOnChange}
-              >
-                <option>small</option>
-                <option>medium</option>
-                <option>large</option>
-              </Select>
-            </GridCol>
-            <GridCol>
-              <Select
-                label="Variant"
-                value={this.state.variant}
-                onChange={this.handleVariantOnChange}
-              >
-                <option>info</option>
-                <option>success</option>
-                <option>warning</option>
-                <option>error</option>
-              </Select>
-            </GridCol>
-          </GridRow>
-        </Grid>
-        {els.map(el => <div>{el}<hr /></div>)}
+      <div className="App">
+        <div className="Page">
+          <Header
+            sizes={['small', 'medium', 'large']}
+            variants={['info', 'success', 'warning', 'error']}
+            components={elsMinusIgnored}
+            component={this.state.component}
+            componentOnChange={this.handleComponentOnChange}
+            size={this.state.size}
+            sizeOnChange={this.handleSizeOnChange}
+            variant={this.state.variant}
+            variantOnChange={this.handleVariantOnChange}
+          />
+          <main className="Page__Main">
+            <Container as="div" padding="x-large none none">
+              {els.map(el =>
+                <Test
+                  testComponent={el.childName}
+                  pageComponent={el.parentName}
+                >
+                  {el.element}
+                </Test>
+              )}
+            </Container>
+            <Clown />
+            <Clown variant="right" />
+          </main>
+        </div>
       </div>
     );
   }

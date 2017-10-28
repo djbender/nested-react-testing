@@ -8,6 +8,7 @@
     "@instructure/ui-themes": "^4.0.0",
     "instructure-icons": "^4.3.2",
     "lorem-ipsum": "^1.0.4",
+    "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-scripts": "1.0.14",

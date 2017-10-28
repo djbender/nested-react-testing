@@ -1,0 +1,6 @@
+.Test {
+  border: 0.5rem solid var(--color-soft-dark);
+  margin: 0 15% 4rem;
+  background: white;
+  box-shadow: 0 0.5rem 0 -0.25rem var(--color-shadow);
+}

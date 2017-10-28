@@ -1,0 +1,33 @@
+.Clown {
+  display: block;
+  height: auto;
+  position: fixed;
+  bottom: 0;
+  z-index: 1;
+}
+
+.Clown--left {
+  left: 0;
+  width: 18%;
+}
+
+.Clown--right {
+  right: 0;
+  width: 14%;
+}
+
+.st0 {
+  fill: var(--color-shadow);
+}
+
+.st1 {
+  fill: var(--color-dark);
+}
+
+.st2 {
+  fill: var(--color-brand);
+}
+
+.st3 {
+  fill: white;
+}
