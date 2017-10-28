@@ -4,11 +4,33 @@
   "private": true,
   "dependencies": {
     "@instructure/ui-core": "^4.0.0",
+    "@instructure/ui-presets": "^4.0.0",
+    "@instructure/ui-themes": "^4.0.0",
+    "instructure-icons": "^4.3.2",
+    "lorem-ipsum": "^1.0.4",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-scripts": "1.0.14"
+    "react-scripts": "1.0.14",
+    "shortid": "^2.2.8"
+  },
+  "devDependencies": {
+    "@instructure/ui-docs-client": "^4.0.0",
+    "@instructure/ui-docs-plugin": "^4.0.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.2",
+    "globby": "^6.1.0",
+    "marked": "^0.3.6",
+    "mustache": "^2.3.0",
+    "nodewatch": "^0.3.1"
   },
   "scripts": {
+    "dev": "babel --watch src/bin -d bin",
+    "build-wip": "babel src/bin -d bin",
+    "dev-exec": "yarn run build-wip && yarn run exec",
+    "exec": "node bin/wip.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
