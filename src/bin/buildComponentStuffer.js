@@ -1,3 +1,7 @@
+/*
+ * CAUTION: THIS FILE IS GENERATED
+ * ALL EDITS MUST BE MADE IN src/bin/buildComponentStuffer.js
+ */
 import Mustache from 'mustache';
 import fs from 'fs';
 import globby from 'globby';
@@ -23,6 +27,7 @@ const ignoreEls = [
   'Grid',
   'InlineSVG',
   'List',
+  'NumberInput', // problem with require('decimal.js') needs to be require('decimal.js/decimal.js) in NumberInput.js
   'Mask', // renders fine but overflows and covers other elements
   'Modal',
   'Overlay',
@@ -55,7 +60,15 @@ const codeBlocks = docs.reduce((arr, doc) => {
   arr.push(hash);
   return arr;
 }, []);
+
 const template = fs.readFileSync('tmpl/ComponentStuffer.mst.js');
 const result = Mustache.render(template.toString(), { codeBlocks, ignoreEls });
 
-fs.writeFile('src/ComponentStuffer.js', result, (error) => { if (error) throw error; });
+const warningLabel = `/*
+ * CAUTION: THIS FILE IS GENERATED
+ * ALL EDITS MUST BE MADE IN tmpl/ComponentStuffer.mst.js
+ */
+
+`;
+
+fs.writeFile('src/ComponentStuffer.js', warningLabel + result, (error) => { if (error) throw error; });

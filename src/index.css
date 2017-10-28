@@ -21,7 +21,7 @@ body {
   color: var(--color);
   font-family: "LatoWeb", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: var(--light-bg);
-  background-image: url('/images/burst.svg');
+  background-image: url('./images/burst.svg');
   background-repeat: no-repeat;
   background-position: left bottom;
   background-size: cover;

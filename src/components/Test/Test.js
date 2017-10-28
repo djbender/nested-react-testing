@@ -34,7 +34,6 @@ class Test extends Component {
     ]
 
     const selection = Math.floor(Math.random() * teasers.length) + 1
-    console.log(selection)
     return teasers[selection - 1]
   }
 

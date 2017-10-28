@@ -42,12 +42,17 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/*
+ * CAUTION: THIS FILE IS GENERATED
+ * ALL EDITS MUST BE MADE IN src/bin/buildComponentStuffer.js
+ */
 const { files } = loadConfig.default('components');
 const docs = _globby2.default.sync(files).map(filepath => _path2.default.resolve((process.cwd(), filepath)));
 const description = reactDocgen.parse(_fs2.default.readFileSync(docs[0])).description;
 const content = (0, _trimIndent2.default)((0, _grayMatter2.default)(description).content);
 
-const ignoreEls = ['Autocomplete', 'Badge', 'Dialog', 'Grid', 'InlineSVG', 'List', 'Mask', // renders fine but overflows and covers other elements
+const ignoreEls = ['Autocomplete', 'Badge', 'Dialog', 'Grid', 'InlineSVG', 'List', 'NumberInput', // problem with require('decimal.js') needs to be require('decimal.js/decimal.js) in NumberInput.js
+'Mask', // renders fine but overflows and covers other elements
 'Modal', 'Overlay', 'Pagination', 'Popover', 'PopoverMenu', 'Portal', 'Position', 'RadioInputGroup', 'SVGIcon', 'Transition', 'Tray'];
 
 function codeBlock(content) {
@@ -70,9 +75,17 @@ const codeBlocks = docs.reduce((arr, doc) => {
   arr.push(hash);
   return arr;
 }, []);
+
 const template = _fs2.default.readFileSync('tmpl/ComponentStuffer.mst.js');
 const result = _mustache2.default.render(template.toString(), { codeBlocks, ignoreEls });
 
-_fs2.default.writeFile('src/ComponentStuffer.js', result, error => {
+const warningLabel = `/*
+ * CAUTION: THIS FILE IS GENERATED
+ * ALL EDITS MUST BE MADE IN tmpl/ComponentStuffer.mst.js
+ */
+
+`;
+
+_fs2.default.writeFile('src/ComponentStuffer.js', warningLabel + result, error => {
   if (error) throw error;
 });
