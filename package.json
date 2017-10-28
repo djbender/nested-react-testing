@@ -2,6 +2,7 @@
   "name": "component-stuffer",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://djbender.github.io/freak-show",
   "dependencies": {
     "@instructure/ui-core": "^4.0.0",
     "@instructure/ui-presets": "^4.0.0",
