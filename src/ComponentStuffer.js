@@ -1,3 +1,8 @@
+/*
+ * CAUTION: THIS FILE IS GENERATED
+ * ALL EDITS MUST BE MADE IN tmpl/ComponentStuffer.mst.js
+ */
+
 import React, { Component } from 'react';
 import '@instructure/ui-themes/lib/canvas';
 import './ComponentStuffer.css';
@@ -725,7 +730,7 @@ class ComponentStuffer extends Component {
     this.state = {
       component: elsMinusIgnored[0],
       size: 'small',
-      variant: 'success'
+      variant: 'info'
     };
   }
 

@@ -30,7 +30,7 @@
     "dev": "babel --watch src/bin -d bin",
     "build-wip": "babel src/bin -d bin",
     "dev-exec": "yarn run build-wip && yarn run exec",
-    "exec": "node bin/wip.js",
+    "exec": "node bin/buildComponentStuffer.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
