@@ -67,23 +67,22 @@ class Header extends Component {
                 <GridCol
                   width={{
                     small: 12,
-                    medium: (this.bothSizeAndVariant()) ? 6 : 4,
-                    large: (this.bothSizeAndVariant()) ? 6 : 3
+                    medium: (this.bothSizeAndVariant()) ? 5 : 4,
+                    large: (this.bothSizeAndVariant()) ? 4 : 3
                   }}
                 >
+                  <Container as="div" margin="0 0 small">
+                    <Select
+                      label="Component"
+                      value={this.props.component}
+                      onChange={this.props.componentOnChange}>
+                      {this.renderOptions(this.props.components)}
+                    </Select>
+                  </Container>
                   <Grid vAlign="middle">
                     <GridRow>
-                      <GridCol width="6">
-                        <Select
-                          label="Component"
-                          value={this.props.component}
-                          onChange={this.props.componentOnChange}
-                        >
-                          {this.renderOptions(this.props.components)}
-                        </Select>
-                      </GridCol>
                       {(this.props.sizes)
-                        ? <GridCol width="3">
+                        ? <GridCol width="6">
                           <Select
                             label="Size"
                             value={this.props.size}
@@ -94,7 +93,7 @@ class Header extends Component {
                         </GridCol> : null
                       }
                       {(this.props.variants)
-                        ? <GridCol width="3">
+                        ? <GridCol width="6">
                           <Select
                             label="Variant"
                             value={this.props.variant}
